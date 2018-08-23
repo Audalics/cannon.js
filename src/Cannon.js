@@ -7,7 +7,6 @@ module.exports = {
     Body :                          require('./objects/Body'),
     Box :                           require('./shapes/Box'),
     Broadphase :                    require('./collision/Broadphase'),
-    CannonDebugRenderer :           require('../tools/threejs/CannonDebugRenderer'),
     Constraint :                    require('./constraints/Constraint'),
     ContactEquation :               require('./equations/ContactEquation'),
     Narrowphase :                   require('./world/Narrowphase'),
@@ -52,3 +51,4 @@ module.exports = {
     Vec3Pool :                      require('./utils/Vec3Pool'),
     World :                         require('./world/World'),
 };
+module.exports.CannonDebugRenderer = require('../tools/threejs/CannonDebugRenderer');
