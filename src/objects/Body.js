@@ -391,6 +391,13 @@ Body.prototype.constructor = Body;
 Body.COLLIDE_EVENT_NAME = "collide";
 
 /**
+ * Dispatched after body change.
+ * @event change
+ * @param {Body} body The body that was involved in the collision.
+ */
+Body.CHANGE_EVENT_NAME = "change";
+
+/**
  * A dynamic body is fully simulated. Can be moved manually by the user, but normally they move according to forces. A dynamic body can collide with all body types. A dynamic body always has finite, non-zero mass.
  * @static
  * @property DYNAMIC

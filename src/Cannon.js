@@ -7,6 +7,7 @@ module.exports = {
     Body :                          require('./objects/Body'),
     Box :                           require('./shapes/Box'),
     Broadphase :                    require('./collision/Broadphase'),
+    CannonDebugRenderer :           require('../tools/threejs/CannonDebugRenderer'),
     Constraint :                    require('./constraints/Constraint'),
     ContactEquation :               require('./equations/ContactEquation'),
     Narrowphase :                   require('./world/Narrowphase'),
