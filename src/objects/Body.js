@@ -448,6 +448,14 @@ Body.wakeupEvent = {
 };
 
 /**
+ * Dispatched after a body has been changed.
+ * @event change
+ */
+Body.changeEvent = {
+    type: "change"
+};
+
+/**
  * Wake the body up.
  * @method wakeUp
  */
@@ -905,6 +913,10 @@ Body.prototype.integrate = function(dt, quatNormalize, quatNormalizeFast){
     angularVelo.x += dt * (e[0] * tx + e[1] * ty + e[2] * tz);
     angularVelo.y += dt * (e[3] * tx + e[4] * ty + e[5] * tz);
     angularVelo.z += dt * (e[6] * tx + e[7] * ty + e[8] * tz);
+
+    if (velo.x * dt != 0 || velo.y * dt != 0 || velo.z * dt != 0) {
+        this.dispatchEvent(Body.changeEvent);
+    }
 
     // Use new velocity  - leap frog
     pos.x += velo.x * dt;
