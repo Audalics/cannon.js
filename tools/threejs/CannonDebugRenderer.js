@@ -1,4 +1,5 @@
 const THREE = require('three');
+const CANNON = require("cannon");
 
 /* global CANNON,THREE,Detector */
 
