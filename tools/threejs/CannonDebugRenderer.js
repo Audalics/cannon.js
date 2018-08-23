@@ -1,3 +1,5 @@
+const THREE = require('three');
+
 /* global CANNON,THREE,Detector */
 
 /**
