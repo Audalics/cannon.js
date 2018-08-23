@@ -1,15 +1,6 @@
 const THREE = require('three');
 
-CANNON = {};
-CANNON.Vec3 = require("cannon").Vec3;
-CANNON.Shape = require("cannon").Shape;
-CANNON.World = require("cannon").World;
-CANNON.Sphere = require("cannon").Sphere;
-CANNON.Box = require("cannon").Box;
-CANNON.Plane = require("cannon").Plane;
-CANNON.ConvexPolyhedron = require("cannon").ConvexPolyhedron;
-CANNON.Trimesh = require("cannon").Trimesh;
-CANNON.Heightfield = require("cannon").Heightfield;
+CANNON = require("../../cannon");
 
 /* global CANNON,THREE,Detector */
 
