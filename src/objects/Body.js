@@ -921,6 +921,7 @@ Body.prototype.integrate = function(dt, quatNormalize, quatNormalizeFast){
     angularVelo.y += dt * (e[3] * tx + e[4] * ty + e[5] * tz);
     angularVelo.z += dt * (e[6] * tx + e[7] * ty + e[8] * tz);
 
+    console.log("CHANGE?", velo.x * dt != 0 || velo.y * dt != 0 || velo.z * dt != 0, "Velocity:", velo, "Delta:", dt);
     if (velo.x * dt != 0 || velo.y * dt != 0 || velo.z * dt != 0) {
         this.dispatchEvent(Body.changeEvent);
     }
