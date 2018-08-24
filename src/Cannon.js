@@ -51,4 +51,3 @@ module.exports = {
     Vec3Pool :                      require('./utils/Vec3Pool'),
     World :                         require('./world/World'),
 };
-module.exports.CannonDebugRenderer = require('../tools/threejs/CannonDebugRenderer');
