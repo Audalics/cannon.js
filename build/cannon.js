@@ -1,4 +1,4 @@
-// Thu, 23 Aug 2018 23:34:53 GMT
+// Fri, 24 Aug 2018 00:08:37 GMT
 
 /*
  * Copyright (c) 2015 cannon.js Authors
@@ -26,7 +26,7 @@
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&false)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.CANNON=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 module.exports={
   "name": "cannon",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "A lightweight 3D physics engine written in JavaScript.",
   "homepage": "https://github.com/schteppe/cannon.js",
   "author": "Stefan Hedman <schteppe@gmail.com> (http://steffe.se)",
@@ -79,7 +79,6 @@ module.exports = {
     Body :                          _dereq_('./objects/Body'),
     Box :                           _dereq_('./shapes/Box'),
     Broadphase :                    _dereq_('./collision/Broadphase'),
-    CannonDebugRenderer :           _dereq_('../tools/threejs/CannonDebugRenderer'),
     Constraint :                    _dereq_('./constraints/Constraint'),
     ContactEquation :               _dereq_('./equations/ContactEquation'),
     Narrowphase :                   _dereq_('./world/Narrowphase'),
@@ -124,7 +123,7 @@ module.exports = {
     Vec3Pool :                      _dereq_('./utils/Vec3Pool'),
     World :                         _dereq_('./world/World'),
 };
-
+module.exports.CannonDebugRenderer = _dereq_('../tools/threejs/CannonDebugRenderer');
 },{"../package.json":1,"../tools/threejs/CannonDebugRenderer":58,"./collision/AABB":3,"./collision/ArrayCollisionMatrix":4,"./collision/Broadphase":5,"./collision/GridBroadphase":6,"./collision/NaiveBroadphase":7,"./collision/ObjectCollisionMatrix":8,"./collision/Ray":10,"./collision/RaycastResult":11,"./collision/SAPBroadphase":12,"./constraints/ConeTwistConstraint":13,"./constraints/Constraint":14,"./constraints/DistanceConstraint":15,"./constraints/HingeConstraint":16,"./constraints/LockConstraint":17,"./constraints/PointToPointConstraint":18,"./equations/ContactEquation":20,"./equations/Equation":21,"./equations/FrictionEquation":22,"./equations/RotationalEquation":23,"./equations/RotationalMotorEquation":24,"./material/ContactMaterial":25,"./material/Material":26,"./math/Mat3":28,"./math/Quaternion":29,"./math/Transform":30,"./math/Vec3":31,"./objects/Body":32,"./objects/RaycastVehicle":33,"./objects/RigidVehicle":34,"./objects/SPHSystem":35,"./objects/Spring":36,"./shapes/Box":38,"./shapes/ConvexPolyhedron":39,"./shapes/Cylinder":40,"./shapes/Heightfield":41,"./shapes/Particle":42,"./shapes/Plane":43,"./shapes/Shape":44,"./shapes/Sphere":45,"./shapes/Trimesh":46,"./solver/GSSolver":47,"./solver/Solver":48,"./solver/SplitSolver":49,"./utils/EventTarget":50,"./utils/Pool":52,"./utils/Vec3Pool":55,"./world/Narrowphase":56,"./world/World":57}],3:[function(_dereq_,module,exports){
 var Vec3 = _dereq_('../math/Vec3');
 var Utils = _dereq_('../utils/Utils');
@@ -6326,6 +6325,7 @@ Body.prototype.integrate = function(dt, quatNormalize, quatNormalizeFast){
     angularVelo.y += dt * (e[3] * tx + e[4] * ty + e[5] * tz);
     angularVelo.z += dt * (e[6] * tx + e[7] * ty + e[8] * tz);
 
+    console.log("CHANGE?", velo.x * dt != 0 || velo.y * dt != 0 || velo.z * dt != 0, "Velocity:", velo, "Delta:", dt);
     if (velo.x * dt != 0 || velo.y * dt != 0 || velo.z * dt != 0) {
         this.dispatchEvent(Body.changeEvent);
     }
@@ -14076,6 +14076,7 @@ var
      */
     World_step_preStepEvent = {type:"preStep"},
     World_step_collideEvent = {type:Body.COLLIDE_EVENT_NAME, body:null, contact:null },
+    World_step_changeEvent = {type:Body.CHANGE_EVENT_NAME, body:null },
     World_step_oldContacts = [], // Pools for unused objects
     World_step_frictionEquationPool = [],
     World_step_p1 = [], // Reusable arrays for collision pairs
@@ -14546,7 +14547,8 @@ World.prototype.clearForces = function(){
 
 },{"../collision/AABB":3,"../collision/ArrayCollisionMatrix":4,"../collision/NaiveBroadphase":7,"../collision/OverlapKeeper":9,"../collision/Ray":10,"../collision/RaycastResult":11,"../equations/ContactEquation":20,"../equations/FrictionEquation":22,"../material/ContactMaterial":25,"../material/Material":26,"../math/Quaternion":29,"../math/Vec3":31,"../objects/Body":32,"../shapes/Shape":44,"../solver/GSSolver":47,"../utils/EventTarget":50,"../utils/TupleDictionary":53,"./Narrowphase":56}],58:[function(_dereq_,module,exports){
 const THREE = _dereq_('three');
-const CANNON = _dereq_("cannon");
+
+CANNON = _dereq_("cannon");
 
 /* global CANNON,THREE,Detector */
 
@@ -14790,7 +14792,7 @@ THREE.CannonDebugRenderer.prototype = {
 },{"cannon":60,"three":117}],59:[function(_dereq_,module,exports){
 module.exports={
   "_from": "git+https://github.com/Audalics/cannon.js.git",
-  "_id": "cannon@0.6.4",
+  "_id": "cannon@0.6.5",
   "_inBundle": false,
   "_location": "/cannon",
   "_phantomChildren": {},
@@ -14806,7 +14808,7 @@ module.exports={
     "#USER",
     "/"
   ],
-  "_resolved": "git+https://github.com/Audalics/cannon.js.git#e5f23b29068146014c7e1d7452d07b88fd90192c",
+  "_resolved": "git+https://github.com/Audalics/cannon.js.git#f94a85da8d25d19ab0aed4a6e399a1a8732edac1",
   "_spec": "https://github.com/Audalics/cannon.js",
   "_where": "C:\\Users\\alexb\\Angular\\world",
   "author": {
@@ -14856,7 +14858,7 @@ module.exports={
     "type": "git",
     "url": "git+https://github.com/audalics/cannon.js.git"
   },
-  "version": "0.6.4"
+  "version": "0.6.5"
 }
 
 },{}],60:[function(_dereq_,module,exports){
@@ -14972,248 +14974,8 @@ module.exports=_dereq_(56)
 },{"../collision/AABB":61,"../collision/Ray":68,"../equations/ContactEquation":78,"../equations/FrictionEquation":80,"../math/Quaternion":87,"../math/Transform":88,"../math/Vec3":89,"../objects/Body":90,"../shapes/ConvexPolyhedron":97,"../shapes/Shape":102,"../solver/Solver":106,"../utils/Vec3Pool":113}],115:[function(_dereq_,module,exports){
 module.exports=_dereq_(57)
 },{"../collision/AABB":61,"../collision/ArrayCollisionMatrix":62,"../collision/NaiveBroadphase":65,"../collision/OverlapKeeper":67,"../collision/Ray":68,"../collision/RaycastResult":69,"../equations/ContactEquation":78,"../equations/FrictionEquation":80,"../material/ContactMaterial":83,"../material/Material":84,"../math/Quaternion":87,"../math/Vec3":89,"../objects/Body":90,"../shapes/Shape":102,"../solver/GSSolver":105,"../utils/EventTarget":108,"../utils/TupleDictionary":111,"./Narrowphase":114}],116:[function(_dereq_,module,exports){
-const THREE = _dereq_('three');
-
-/* global CANNON,THREE,Detector */
-
-/**
- * Adds Three.js primitives into the scene where all the Cannon bodies and shapes are.
- * @class CannonDebugRenderer
- * @param {THREE.Scene} scene
- * @param {CANNON.World} world
- * @param {object} [options]
- */
-THREE.CannonDebugRenderer = function(scene, world, options){
-    options = options || {};
-
-    this.scene = scene;
-    this.world = world;
-
-    this._meshes = [];
-
-    this._material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-    this._sphereGeometry = new THREE.SphereGeometry(1);
-    this._boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-    this._planeGeometry = new THREE.PlaneGeometry( 10, 10, 10, 10 );
-    this._cylinderGeometry = new THREE.CylinderGeometry( 1, 1, 10, 10 );
-};
-
-THREE.CannonDebugRenderer.prototype = {
-
-    tmpVec0: new CANNON.Vec3(),
-    tmpVec1: new CANNON.Vec3(),
-    tmpVec2: new CANNON.Vec3(),
-    tmpQuat0: new CANNON.Vec3(),
-
-    update: function(){
-
-        var bodies = this.world.bodies;
-        var meshes = this._meshes;
-        var shapeWorldPosition = this.tmpVec0;
-        var shapeWorldQuaternion = this.tmpQuat0;
-
-        var meshIndex = 0;
-
-        for (var i = 0; i !== bodies.length; i++) {
-            var body = bodies[i];
-
-            for (var j = 0; j !== body.shapes.length; j++) {
-                var shape = body.shapes[j];
-
-                this._updateMesh(meshIndex, body, shape);
-
-                var mesh = meshes[meshIndex];
-
-                if(mesh){
-
-                    // Get world position
-                    body.quaternion.vmult(body.shapeOffsets[j], shapeWorldPosition);
-                    body.position.vadd(shapeWorldPosition, shapeWorldPosition);
-
-                    // Get world quaternion
-                    body.quaternion.mult(body.shapeOrientations[j], shapeWorldQuaternion);
-
-                    // Copy to meshes
-                    mesh.position.copy(shapeWorldPosition);
-                    mesh.quaternion.copy(shapeWorldQuaternion);
-                }
-
-                meshIndex++;
-            }
-        }
-
-        for(var i = meshIndex; i < meshes.length; i++){
-            var mesh = meshes[i];
-            if(mesh){
-                this.scene.remove(mesh);
-            }
-        }
-
-        meshes.length = meshIndex;
-    },
-
-    _updateMesh: function(index, body, shape){
-        var mesh = this._meshes[index];
-        if(!this._typeMatch(mesh, shape)){
-            if(mesh){
-                this.scene.remove(mesh);
-            }
-            mesh = this._meshes[index] = this._createMesh(shape);
-        }
-        this._scaleMesh(mesh, shape);
-    },
-
-    _typeMatch: function(mesh, shape){
-        if(!mesh){
-            return false;
-        }
-        var geo = mesh.geometry;
-        return (
-            (geo instanceof THREE.SphereGeometry && shape instanceof CANNON.Sphere) ||
-            (geo instanceof THREE.BoxGeometry && shape instanceof CANNON.Box) ||
-            (geo instanceof THREE.PlaneGeometry && shape instanceof CANNON.Plane) ||
-            (geo.id === shape.geometryId && shape instanceof CANNON.ConvexPolyhedron) ||
-            (geo.id === shape.geometryId && shape instanceof CANNON.Trimesh) ||
-            (geo.id === shape.geometryId && shape instanceof CANNON.Heightfield)
-        );
-    },
-
-    _createMesh: function(shape){
-        var mesh;
-        var material = this._material;
-
-        switch(shape.type){
-
-        case CANNON.Shape.types.SPHERE:
-            mesh = new THREE.Mesh(this._sphereGeometry, material);
-            break;
-
-        case CANNON.Shape.types.BOX:
-            mesh = new THREE.Mesh(this._boxGeometry, material);
-            break;
-
-        case CANNON.Shape.types.PLANE:
-            mesh = new THREE.Mesh(this._planeGeometry, material);
-            break;
-
-        case CANNON.Shape.types.CONVEXPOLYHEDRON:
-            // Create mesh
-            var geo = new THREE.Geometry();
-
-            // Add vertices
-            for (var i = 0; i < shape.vertices.length; i++) {
-                var v = shape.vertices[i];
-                geo.vertices.push(new THREE.Vector3(v.x, v.y, v.z));
-            }
-
-            for(var i=0; i < shape.faces.length; i++){
-                var face = shape.faces[i];
-
-                // add triangles
-                var a = face[0];
-                for (var j = 1; j < face.length - 1; j++) {
-                    var b = face[j];
-                    var c = face[j + 1];
-                    geo.faces.push(new THREE.Face3(a, b, c));
-                }
-            }
-            geo.computeBoundingSphere();
-            geo.computeFaceNormals();
-
-            mesh = new THREE.Mesh(geo, material);
-            shape.geometryId = geo.id;
-            break;
-
-        case CANNON.Shape.types.TRIMESH:
-            var geometry = new THREE.Geometry();
-            var v0 = this.tmpVec0;
-            var v1 = this.tmpVec1;
-            var v2 = this.tmpVec2;
-            for (var i = 0; i < shape.indices.length / 3; i++) {
-                shape.getTriangleVertices(i, v0, v1, v2);
-                geometry.vertices.push(
-                    new THREE.Vector3(v0.x, v0.y, v0.z),
-                    new THREE.Vector3(v1.x, v1.y, v1.z),
-                    new THREE.Vector3(v2.x, v2.y, v2.z)
-                );
-                var j = geometry.vertices.length - 3;
-                geometry.faces.push(new THREE.Face3(j, j+1, j+2));
-            }
-            geometry.computeBoundingSphere();
-            geometry.computeFaceNormals();
-            mesh = new THREE.Mesh(geometry, material);
-            shape.geometryId = geometry.id;
-            break;
-
-        case CANNON.Shape.types.HEIGHTFIELD:
-            var geometry = new THREE.Geometry();
-
-            var v0 = this.tmpVec0;
-            var v1 = this.tmpVec1;
-            var v2 = this.tmpVec2;
-            for (var xi = 0; xi < shape.data.length - 1; xi++) {
-                for (var yi = 0; yi < shape.data[xi].length - 1; yi++) {
-                    for (var k = 0; k < 2; k++) {
-                        shape.getConvexTrianglePillar(xi, yi, k===0);
-                        v0.copy(shape.pillarConvex.vertices[0]);
-                        v1.copy(shape.pillarConvex.vertices[1]);
-                        v2.copy(shape.pillarConvex.vertices[2]);
-                        v0.vadd(shape.pillarOffset, v0);
-                        v1.vadd(shape.pillarOffset, v1);
-                        v2.vadd(shape.pillarOffset, v2);
-                        geometry.vertices.push(
-                            new THREE.Vector3(v0.x, v0.y, v0.z),
-                            new THREE.Vector3(v1.x, v1.y, v1.z),
-                            new THREE.Vector3(v2.x, v2.y, v2.z)
-                        );
-                        var i = geometry.vertices.length - 3;
-                        geometry.faces.push(new THREE.Face3(i, i+1, i+2));
-                    }
-                }
-            }
-            geometry.computeBoundingSphere();
-            geometry.computeFaceNormals();
-            mesh = new THREE.Mesh(geometry, material);
-            shape.geometryId = geometry.id;
-            break;
-        }
-
-        if(mesh){
-            this.scene.add(mesh);
-        }
-
-        return mesh;
-    },
-
-    _scaleMesh: function(mesh, shape){
-        switch(shape.type){
-
-        case CANNON.Shape.types.SPHERE:
-            var radius = shape.radius;
-            mesh.scale.set(radius, radius, radius);
-            break;
-
-        case CANNON.Shape.types.BOX:
-            mesh.scale.copy(shape.halfExtents);
-            mesh.scale.multiplyScalar(2);
-            break;
-
-        case CANNON.Shape.types.CONVEXPOLYHEDRON:
-            mesh.scale.set(1,1,1);
-            break;
-
-        case CANNON.Shape.types.TRIMESH:
-            mesh.scale.copy(shape.scale);
-            break;
-
-        case CANNON.Shape.types.HEIGHTFIELD:
-            mesh.scale.set(1,1,1);
-            break;
-
-        }
-    }
-};
-},{"three":117}],117:[function(_dereq_,module,exports){
+module.exports=_dereq_(58)
+},{"cannon":60,"three":117}],117:[function(_dereq_,module,exports){
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
